@@ -1,8 +1,9 @@
+/*jslint node:true browser:true */
+'use strict';
 // quick sort baby! 
 //
 // Chome's V8 uses this for Array.sort() for larger arrays (length 20ish or more)
 // much more to be found about quicksort here http://www.nczonline.net/blog/2012/11/27/computer-science-in-javascript-quicksort/
-'use strict';
 
 var swap,
     partition,
@@ -89,9 +90,10 @@ quickSort = function (list, left, right) {
 };
 
 
-// can this be used for sorting lists of strings alphabetically ?
-
-// expose as the global/module (part of the build process with uglifyjs
-if (module) {
+// module jargon
+if (module && module.exports) {
     module.exports.quickSort = quickSort;
+} else {
+    window.algos = window.algos || {};
+    window.algos.quickSort = quickSort;
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>  <html> <head>   <title>insertionsort.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="insertionsort.html">                 insertionsort.js               </a>                                           <a class="source" href="mergesort.html">                 mergesort.js               </a>                                           <a class="source" href="quicksort.html">                 quicksort.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               insertionsort.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/*jslint node:true browser:true */</span>
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Insertion sort, the stable sort.</p>
+
+<p>resources:
+https://www.khanacademy.org/science/computer-science/v/insertion-sort-algorithm
+http://www.nczonline.net/blog/2012/09/17/computer-science-in-javascript-insertion-sort/</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">insertionSort</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Ok, so what on earth is this? it's quite simple to explain visually. Think of bunch of cups,
+each one had a marble with a value written on it. To order the values on the balls we start
+with the second cup from the left and take the ball out. Now compare the value of the loose
+ball with the value of the ball in the cup to the left of the empty cup. If the value is
+greater then we grab that ball and move it to the now empty cup. Continue to do this while the
+values of the balls in the cups to the left are greater than the loose balls vlaue. Once you
+reach the last cup on the left or a value that is lesser than the loose ball's value, just
+place the loose ball in the empty cup and move right to the next cup.
+By the time you reach the last cup on the right, you'll have sorted the balls per their values
+in ascending order.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">insertionSort</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+        <span class="nx">val</span><span class="p">,</span>
+        <span class="nx">i</span><span class="p">,</span>
+        <span class="nx">hole</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nx">val</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">hole</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nx">hole</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">val</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span><span class="p">]</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="nx">hole</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>module jargon</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nx">module</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">insertionSort</span> <span class="o">=</span> <span class="nx">insertionSort</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">algos</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">algos</span> <span class="o">||</span> <span class="p">{};</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">algos</span><span class="p">.</span><span class="nx">insertionSort</span> <span class="o">=</span> <span class="nx">insertionSort</span><span class="p">;</span>
+<span class="p">}</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

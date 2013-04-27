@@ -11,8 +11,8 @@ docs:
 
 module:
 	@echo "----> Creating Module..."
-	uglifyjs -c -m --wrap 'algos' src/js/*.js > algos.min.js
-	uglifyjs -b --wrap 'algos' src/js/*.js > algos.js
+	uglifyjs src/js/*.js -c -m --wrap algos > algos.min.js
+	uglifyjs src/js/*.js -b --wrap algos > algos.js
 
 clean:
 	rm -rf docs algos*
@@ -21,5 +21,6 @@ test: lint module
 	@echo "----> Testing..."
 	node test/quicksort.js
 	node test/mergesort.js
+	node test/insertionsort.js
 
 .PHONY: docs module

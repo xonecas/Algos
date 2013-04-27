@@ -3,6 +3,12 @@ Algorithms study.
 
 I'm brushing up on these things.
 
+So I figured I would make a JS library with them.
+
+Use `make` to build it all. It depends on uglifyjs jslint and docco cli commands in your path.
+
+To run tests use `make test`
+
 License
 =======
 

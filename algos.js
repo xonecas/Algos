@@ -1,6 +1,27 @@
 (function(exports, global) {
     global["algos"] = exports;
     "use strict";
+    var insertionSort;
+    insertionSort = function(list) {
+        var len = list.length, val, i, hole;
+        for (i = 1; i < len; i += 1) {
+            val = list[i];
+            hole = i;
+            while (hole > 0 && val < list[hole - 1]) {
+                list[hole] = list[hole - 1];
+                hole -= 1;
+            }
+            list[hole] = val;
+        }
+        return list;
+    };
+    if (module && module.exports) {
+        module.exports.insertionSort = insertionSort;
+    } else {
+        window.algos = window.algos || {};
+        window.algos.insertionSort = insertionSort;
+    }
+    "use strict";
     var join, mergeSort;
     join = function(a, b) {
         var joined = [], ai = 0, bi = 0;
@@ -22,8 +43,11 @@
         var m = Math.floor(list.length / 2), a = list.slice(0, m), b = list.slice(m);
         return join(mergeSort(a), mergeSort(b));
     };
-    if (module) {
+    if (module && module.exports) {
         module.exports.mergeSort = mergeSort;
+    } else {
+        window.algos = window.algos || {};
+        window.algos.mergeSort = mergeSort;
     }
     "use strict";
     var swap, partition, quickSort;
@@ -64,8 +88,11 @@
         }
         return list;
     };
-    if (module) {
+    if (module && module.exports) {
         module.exports.quickSort = quickSort;
+    } else {
+        window.algos = window.algos || {};
+        window.algos.quickSort = quickSort;
     }
 })({}, function() {
     return this;

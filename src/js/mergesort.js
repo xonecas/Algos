@@ -1,5 +1,6 @@
-// Let's try merge sort, seems cool.
+/*jslint node:true browser:true */
 'use strict';
+// Let's try merge sort, seems cool.
 
 var join,
     mergeSort;
@@ -57,7 +58,10 @@ mergeSort = function (list) {
 
 };
 
-// expose as the global/module (part of the build process with uglifyjs
-if (module) {
+// module jargon
+if (module && module.exports) {
     module.exports.mergeSort = mergeSort;
+} else {
+    window.algos = window.algos || {};
+    window.algos.mergeSort = mergeSort;
 }
