@@ -23,4 +23,4 @@ test: lint module
 	node test/mergesort.js
 	node test/insertionsort.js
 
-.PHONY: docs module
+.PHONY: lint docs module clean test
