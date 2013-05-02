@@ -246,3 +246,30 @@ shuffle = algos.shuffle = function (list) {
 
     return list;
 };
+
+
+// Levenshtein distance (fuzzy text matching)
+// ==========================================
+
+var fuzzy;
+
+
+// Levenshtein distance is the number of edits to change one word into another. For example
+// `git` and `got` have a Levenshtein distance of 1, since only one edit needs to be made
+// to tranform them into equal strings. Levenshtein is not very efficient and for performance
+// concerns it should only be applied to small strings at a time, since checking a massive text
+// would take forever(ish).
+
+fuzzy = algos.fuzzy = function (a, b) {
+
+    // base cases
+    if (a === b) { return 0; }
+    if (!a.length || !b.length) { return 0; }
+
+    return Math.min(
+        fuzzy(a.substring(1), b) + 1,
+        fuzzy(b.substring(1), a) + 1,
+        fuzzy(a.substring(1), b.substring(1)) + (a[0] !== b[0] ? 1 : 0)
+    );
+
+};

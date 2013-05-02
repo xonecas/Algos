@@ -22,5 +22,6 @@ clean:
 test: lint module
 	@echo "----> Testing..."
 	node test/sorts.js
+	node test/levs.js
 
 .PHONY: lint docs module clean test

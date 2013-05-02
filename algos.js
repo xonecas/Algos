@@ -95,6 +95,16 @@
         }
         return list;
     };
+    var fuzzy;
+    fuzzy = algos.fuzzy = function(a, b) {
+        if (a === b) {
+            return 0;
+        }
+        if (!a.length || !b.length) {
+            return 0;
+        }
+        return Math.min(fuzzy(a.substring(1), b) + 1, fuzzy(b.substring(1), a) + 1, fuzzy(a.substring(1), b.substring(1)) + (a[0] !== b[0] ? 1 : 0));
+    };
     if (module && module.exports || exports) {
         module = module || {};
         exports = module.exports = algos;
