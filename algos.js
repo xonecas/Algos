@@ -1,8 +1,8 @@
-(function(exports, global) {
-    global["algos"] = exports;
+(function() {
     "use strict";
+    var algos = {};
     var insertionSort;
-    insertionSort = function(list) {
+    insertionSort = algos.insertionSort = function(list) {
         var len = list.length, val, i, hole;
         for (i = 1; i < len; i += 1) {
             val = list[i];
@@ -15,13 +15,6 @@
         }
         return list;
     };
-    if (module && module.exports) {
-        module.exports.insertionSort = insertionSort;
-    } else {
-        window.algos = window.algos || {};
-        window.algos.insertionSort = insertionSort;
-    }
-    "use strict";
     var join, mergeSort;
     join = function(a, b) {
         var joined = [], ai = 0, bi = 0;
@@ -36,20 +29,13 @@
         }
         return joined.concat(a.slice(ai).concat(b.slice(bi)));
     };
-    mergeSort = function(list) {
+    mergeSort = algos.mergeSort = function(list) {
         if (list.length <= 1) {
             return list;
         }
         var m = Math.floor(list.length / 2), a = list.slice(0, m), b = list.slice(m);
         return join(mergeSort(a), mergeSort(b));
     };
-    if (module && module.exports) {
-        module.exports.mergeSort = mergeSort;
-    } else {
-        window.algos = window.algos || {};
-        window.algos.mergeSort = mergeSort;
-    }
-    "use strict";
     var swap, partition, quickSort;
     swap = function(list, first, second) {
         var tmp = list[first];
@@ -73,7 +59,7 @@
         }
         return left;
     };
-    quickSort = function(list, left, right) {
+    quickSort = algos.quickSort = function(list, left, right) {
         var idx;
         if (list.length >= 2) {
             left = left === undefined ? 0 : left;
@@ -88,12 +74,31 @@
         }
         return list;
     };
-    if (module && module.exports) {
-        module.exports.quickSort = quickSort;
+    var bubbleSort;
+    bubbleSort = algos.bubbleSort = function(list) {
+        var len = list.length, i, j;
+        for (i = 0; i < len; i += 1) {
+            for (j = 0; j < len - i; j += 1) {
+                if (list[j] > list[j + 1]) {
+                    swap(list, j, j + 1);
+                }
+            }
+        }
+        return list;
+    };
+    var shuffle;
+    shuffle = algos.shuffle = function(list) {
+        var len = list.length, max = len - 1;
+        while (len) {
+            len -= 1;
+            swap(list, len, Math.floor(Math.random() * max));
+        }
+        return list;
+    };
+    if (module && module.exports || exports) {
+        module = module || {};
+        exports = module.exports = algos;
     } else {
-        window.algos = window.algos || {};
-        window.algos.quickSort = quickSort;
+        window.algos = algos;
     }
-})({}, function() {
-    return this;
-}());
+})();

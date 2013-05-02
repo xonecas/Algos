@@ -1,0 +1,180 @@
+<!DOCTYPE html>  <html> <head>   <title>algos.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               algos.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/*jslint node:true browser:true */</span>
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">algos</span> <span class="o">=</span> <span class="p">{};</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Insertion sort, the stable sort.</h1>
+
+<p>resources:
+https://www.khanacademy.org/science/computer-science/v/insertion-sort-algorithm
+http://www.nczonline.net/blog/2012/09/17/computer-science-in-javascript-insertion-sort/</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">insertionSort</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Ok, so what on earth is this? it's quite simple to explain visually. Think of bunch of cups,
+each one had a marble with a value written on it. To order the values on the balls we start
+with the second cup from the left and take the ball out. Now compare the value of the loose
+ball with the value of the ball in the cup to the left of the empty cup. If the value is
+greater then we grab that ball and move it to the now empty cup. Continue to do this while the
+values of the balls in the cups to the left are greater than the loose balls vlaue. Once you
+reach the last cup on the left or a value that is lesser than the loose ball's value, just
+place the loose ball in the empty cup and move right to the next cup.
+By the time you reach the last cup on the right, you'll have sorted the balls per their values
+in ascending order.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">insertionSort</span> <span class="o">=</span> <span class="nx">algos</span><span class="p">.</span><span class="nx">insertionSort</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+        <span class="nx">val</span><span class="p">,</span>
+        <span class="nx">i</span><span class="p">,</span>
+        <span class="nx">hole</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nx">val</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">hole</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nx">hole</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">val</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span><span class="p">]</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="nx">hole</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">list</span><span class="p">[</span><span class="nx">hole</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h1>Let's try merge sort, seems cool.</h1>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">join</span><span class="p">,</span>
+    <span class="nx">mergeSort</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Join two sorted arrays together.</p>
+
+<p>Create two pointers, one for each list, point them both to the value
+at index 0. Keep comparing the idexes values and keep the lowest in the
+joined list, increment by 1 the respective index. Do this until one of
+the indexes matches the length of it's list.
+Simple pile up the remainder of the orther list at the end of the joined
+result. Ta-Da!</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">join</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">joined</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="nx">ai</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">bi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">ai</span> <span class="o">&lt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">bi</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">ai</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">[</span><span class="nx">bi</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">joined</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">ai</span><span class="p">]);</span>
+            <span class="nx">ai</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">joined</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">b</span><span class="p">[</span><span class="nx">bi</span><span class="p">]);</span>
+            <span class="nx">bi</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">joined</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">ai</span><span class="p">).</span><span class="nx">concat</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">bi</span><span class="p">)));</span>
+
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Now for the cool part</p>
+
+<p>Don't you love recursion? Base case is a single item list, that needs no
+sort and can be returned as is. The recursive step finds a middle to the
+list and cuts it in half.
+We return the recursive call, so that we keep on splitting smaller and
+smaller lists until their are of a single item, and then we return them
+as we pile them back up in order one by one.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">mergeSort</span> <span class="o">=</span> <span class="nx">algos</span><span class="p">.</span><span class="nx">mergeSort</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">m</span><span class="p">),</span>
+        <span class="nx">b</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">m</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nx">join</span><span class="p">(</span><span class="nx">mergeSort</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span> <span class="nx">mergeSort</span><span class="p">(</span><span class="nx">b</span><span class="p">));</span>
+
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h1>quick sort baby!</h1>
+
+<p>Chome's V8 uses this for Array.sort() for larger arrays (length 20ish or more)
+much more to be found about quicksort here http://www.nczonline.net/blog/2012/11/27/computer-science-in-javascript-quicksort/</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">swap</span><span class="p">,</span>
+    <span class="nx">partition</span><span class="p">,</span>
+    <span class="nx">quickSort</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>easy peasy swap function.</p>
+
+<p>think 3 glasses, a red one with beer, a blue one with wine, and a white empty one.
+we want the beer in the blue glass and the wine in the red one.
+pour the beer in the white one,
+pour the wine in the red one,
+pour the beer into the blue one.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">swap</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">first</span><span class="p">];</span>
+    <span class="nx">list</span><span class="p">[</span><span class="nx">first</span><span class="p">]</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">second</span><span class="p">];</span>
+    <span class="nx">list</span><span class="p">[</span><span class="nx">second</span><span class="p">]</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>creates a smaller partition of the array</p>
+
+<p>starting with a middle point because if the array is sorted you'll get
+the worst possible performance if you choose the first or last elements.
+while the left pointer is smaller or equal to the right pointer
+move the left pointer to the right while it's value is less than the middle's value.
+after, move the right pointer to the left while it's value is greater than the middle's value.
+if the left pointer is smaller or equal to the right pointer swap the pointers values.
+move the pointers one more time in each direction so that we continue in the correct direction.
+return the left pointer so it can be used as the starting point for the next partition.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">partition</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">pivot</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span> <span class="p">(</span><span class="nx">left</span> <span class="o">+</span> <span class="nx">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="p">)];</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;=</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">pivot</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;=</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">swap</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
+            <span class="nx">left</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">right</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">left</span><span class="p">;</span>
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Only operate on lists with 2 or more values.
+use default values for left and right if they are undefined (first run).
+partition the array.
+if the left pointer can still be moved right towards the index, call quicksort again in that direction.
+if the right pointer can be moved left, call quicksort from the current index.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">quickSort</span> <span class="o">=</span> <span class="nx">algos</span><span class="p">.</span><span class="nx">quickSort</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">idx</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="nx">left</span> <span class="o">=</span> <span class="nx">left</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="nx">left</span><span class="p">;</span>
+        <span class="nx">right</span> <span class="o">=</span> <span class="nx">right</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="nx">right</span><span class="p">;</span>
+
+        <span class="nx">idx</span> <span class="o">=</span> <span class="nx">partition</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">left</span> <span class="o">&lt;</span> <span class="nx">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">quickSort</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">idx</span> <span class="o">&lt;</span> <span class="nx">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">quickSort</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">idx</span><span class="p">,</span> <span class="nx">right</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <h1>Bubble sort, aka blubbly</h1>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">bubbleSort</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>As the name says, bubbly over here compares all the values in sequence, "bubbling" the
+higher values to the top. VERY SLOW! n^2 slow...</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">bubbleSort</span> <span class="o">=</span> <span class="nx">algos</span><span class="p">.</span><span class="nx">bubbleSort</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+        <span class="nx">i</span><span class="p">,</span>
+        <span class="nx">j</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">len</span> <span class="o">-</span> <span class="nx">i</span><span class="p">);</span> <span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">list</span><span class="p">[</span><span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+                <span class="nx">swap</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <h1>shuffle, make a mess of things...</h1>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">shuffle</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>slow and compreensive? fast and simple?
+for each item in the array, create a random number within the length and swap.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">shuffle</span> <span class="o">=</span> <span class="nx">algos</span><span class="p">.</span><span class="nx">shuffle</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+        <span class="nx">max</span> <span class="o">=</span> <span class="nx">len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">len</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">swap</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">len</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">max</span> <span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">list</span><span class="p">;</span>
+<span class="p">};</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
