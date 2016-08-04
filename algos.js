@@ -74,6 +74,39 @@
         }
         return list;
     };
+    var randomizedPartition, randomizedQuickSort;
+    randomizedPartition = function(list, left, right) {
+        var pivot = list[Math.floor(Math.random() * (right - left) + left)];
+        while (left <= right) {
+            while (list[left] < pivot) {
+                left += 1;
+            }
+            while (list[right] > pivot) {
+                right -= 1;
+            }
+            if (left <= right) {
+                swap(list, left, right);
+                left += 1;
+                right -= 1;
+            }
+        }
+        return left;
+    };
+    randomizedQuickSort = algos.randomizedQuickSort = function(list, left, right) {
+        var idx;
+        if (list.length >= 2) {
+            left = left === undefined ? 0 : left;
+            right = right === undefined ? list.length - 1 : right;
+            idx = randomizedPartition(list, left, right);
+            if (left < idx - 1) {
+                randomizedQuickSort(list, left, idx - 1);
+            }
+            if (idx < right) {
+                randomizedQuickSort(list, idx, right);
+            }
+        }
+        return list;
+    };
     var bubbleSort;
     bubbleSort = algos.bubbleSort = function(list) {
         var len = list.length, i, j;
