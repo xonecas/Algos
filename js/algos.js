@@ -116,7 +116,9 @@ mergeSort = algos.mergeSort = function (list) {
 
 var swap,
     partition,
-    quickSort;
+    quickSort,
+    randomizedPartition,
+    randomizedQuickSort;
 
 
 // easy peasy swap function.
@@ -198,6 +200,60 @@ quickSort = algos.quickSort = function (list, left, right) {
     return list;
 };
 
+// This version of partition and quick sort calculates the pivot at random,
+// since the probability of the randomizer finding an item in the list that divides
+// the list in a 25-75 split is superior.
+// The expected time requirement becomes O(n log n), and the worst-case O(n^2) is very
+// unlikely to happen
+
+// var randomizedPartition,
+    // randomizedQuickSort;
+
+randomizedPartition = function (list, left, right) {
+    var pivot = list[Math.floor(Math.random() * (right - left) + left)];
+
+    while (left <= right) {
+
+        while (list[left] < pivot) {
+            left += 1;
+        }
+
+        while (list[right] > pivot) {
+            right -= 1;
+        }
+
+        if (left <= right) {
+            swap(list, left, right);
+            left += 1;
+            right -= 1;
+        }
+
+    }
+
+    return left;
+};
+
+randomizedQuickSort = algos.randomizedQuickSort = function (list, left, right) {
+    var idx;
+
+    if (list.length >= 2) {
+
+        left = left === undefined ? 0 : left;
+        right = right === undefined ? list.length - 1 : right;
+
+        idx = randomizedPartition(list, left, right);
+
+        if (left < idx - 1) {
+            randomizedQuickSort(list, left, idx - 1);
+        }
+
+        if (idx < right) {
+            randomizedQuickSort(list, idx, right);
+        }
+    }
+
+    return list;
+};
 
 
 // Bubble sort, aka blubbly

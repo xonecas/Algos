@@ -27,3 +27,7 @@ var bubbleSort = algos.bubbleSort;
 console.log("JS bubble sort");
 console.log(bubbleSort(list));
 
+list = algos.shuffle(list);
+var randomizedQuickSort = algos.randomizedQuickSort;
+console.log("JS randomized quick sort");
+console.log(randomizedQuickSort(list));
